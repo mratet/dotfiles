@@ -9,6 +9,12 @@ I started from the organization of this [repo](https://github.com/logandonley/do
 ## How to run
 
 ```shell
-export GITHUB_USERNAME=mratet
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply $GITHUB_USERNAME
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply https://github.com/mratet/doftiles.git
 ```
+
+## To add
+- Steam (+ Everest Celeste if needed)
+- Docker / Kubernetes
+- Slack
+- Draw.io
+- Signal

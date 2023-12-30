@@ -31,6 +31,7 @@
           - flatpak
           - libreoffice
           - zlib1g
+          - solaar
         state: present
 
     - name: Change shell to zsh

@@ -32,6 +32,7 @@
           - libreoffice
           - zlib1g
           - solaar
+          - python3-pip
         state: present
 
     - name: Change shell to zsh

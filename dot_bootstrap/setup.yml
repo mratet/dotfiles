@@ -15,6 +15,7 @@
         name:
           - git
           - htop
+          - btop
           - vim
           - firefox
           - gh
@@ -33,6 +34,12 @@
           - zlib1g
           - solaar
           - python3-pip
+          - i3
+          - polybar
+          - picom
+          - feh
+          - ulauncher
+          - flameshot
         state: present
 
     - name: Change shell to zsh

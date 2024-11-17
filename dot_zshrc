@@ -23,10 +23,6 @@ export PATH="$HOME/soft:$PATH"
 alias v=vim
 alias zs='vim ~/.zshrc'
 alias reload='source ~/.zshrc'
-<<<<<<< Updated upstream
-=======
-alias k=kubectl
->>>>>>> Stashed changes
 alias cls='clear'
 
 alias ..='cd ..'
@@ -34,12 +30,6 @@ alias ...='cd ../../'
 alias ....='cd ../../../'
 alias .....='cd ../../../../'
 alias weather="curl -4 http://wttr.in"
-<<<<<<< Updated upstream
-=======
-
-alias grep='grep --color=auto'
-alias ls='ls --color=auto'
->>>>>>> Stashed changes
 
 get_youtube_mp3() {
     youtube-dl --extract-audio --audio-format mp3 "$1"

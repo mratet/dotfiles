@@ -25,6 +25,8 @@ nnoremap <c-z> :action ToggleDistractionFreeMode<CR>
 """ Terminal
 nmap <leader>tt <Action>(ActivateTerminalToolWindow)
 nmap <leader>tc <Action>(Terminal.OpenInTerminal)
+" To hide the terminal
+nmap <leader>th <Action>(HideActiveWindow)
 
 " location
 nmap <C-i> <Action>(Back)
@@ -199,7 +201,7 @@ nmap gn <Action>(ShowNavBar)
 "   ys   Surround text object
 " See https://github.com/tpope/vim-surround/blob/master/doc/surround.txt for details
 " usefull when working with markup languages
-" set surround
+set surround
 
 
 """ argtextobj  Plugin  --------------------------------
@@ -227,9 +229,9 @@ nmap gn <Action>(ShowNavBar)
 "   easy-motion-s Search backward
 "   easy-motion-f Search forward
 " See https://github.com/AlexPl292/IdeaVim-EasyMotion#supported-commands for details
-Plug 'easymotion/vim-easymotion'
-map <leader>J <Plug>(easymotion-s)
-map <leader>j <Plug>(easymotion-f)
+"Plug 'easymotion/vim-easymotion'
+"map <leader>J <Plug>(easymotion-s)
+"map <leader>j <Plug>(easymotion-f)
 
 """ NERDTree plugin  --------------------------------
 " Emulates NERDTree
@@ -301,3 +303,7 @@ map <c-n> :NERDTreeToggle<CR>
 " continuous shift
 xnoremap < <gv
 xnoremap > >gv
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+nnoremap n nzzzv
+nnoremap N Nzzzv

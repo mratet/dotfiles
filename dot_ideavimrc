@@ -1,9 +1,18 @@
+"" Keyboard Shortcut Rebinds (in PyCharm)
+"" <EditorUp> -> <c-k> // Useful for navigating in pop ups
+"" <EditorDown> -> <c-j> // Useful for navigating in pop ups
+"" <copilot.openCopilot> -> <c-p>
+"" <copilot.toggleCopilot> -> <c-P>
+"" <copilot.requestCompletions> -> <c-[>
+"" <copilot.cycleNextInLays> -> <c-[>
+"" <copilot.cyclePrevInLays> -> <c-]> 
+
 """ Editing and Reloading the Config
 nnoremap \e :e ~/.ideavimrc<CR>
 nnoremap \r :action IdeaVim.ReloadVimRc.reload<CR>
 
-"" Common settings -------------------------
-set clipboard+=unnamed
+""" Common settings -------------------------
+set clipboard+=unnamed, unnamedplus
 set clipboard+=ideaput
 
 set so=5
@@ -14,34 +23,59 @@ set hlsearch
 set history=1000
 set timeoutlen=400
 
+""" ideavim settings
 set ideajoin
+set ideamarks
+set idearefactormode=normal
+set ideastatusicon=gray
 
 """ The Leader Key
 let mapleader=" "
 
+""" Plugins
+set surround        " commands: ys, cs, ds, S
+"set multiple-cursor " commands: <A-n>, <A-x>, <A-p>, <A-n>
+set ReplaceWithRegister " commands: gr, grr  ex:griw
+set exchange            " commands: cx{motion}, cxx, {Visual}X, cxc
+set highlightedyank
+set textobj-entire " additional text objects: ae, ie
+set textobj-indent   " additional text objects: ai, ii, aI, iI
+set NERDTree
+nnoremap <leader>nt :NERDTree<CR>
+
 """ Distraction Free Mode
-nnoremap <c-z> :action ToggleDistractionFreeMode<CR>
+nmap <c-z> :action ToggleDistractionFreeMode<CR>
+nmap <leader>z <Action>(ToggleZenMode)
 
 """ Terminal
 nmap <leader>tt <Action>(ActivateTerminalToolWindow)
 nmap <leader>tc <Action>(Terminal.OpenInTerminal)
-" To hide the terminal
 nmap <leader>th <Action>(HideActiveWindow)
+nmap <leader>to <Action>(ActivateTODOToolWindow)
 
-" location
+nnoremap <leader>ff :action Switcher<CR>
+nmap <C-W> <Action>(PrevSplitter) "Utilisation pas clair
+nmap <C-w> <Action>(NextSplitter)
+nmap <C-p> <Action>(JumpToLastWindow)
+
+
+""" Location
 nmap <C-i> <Action>(Back)
 nmap <C-o> <Action>(Forward)
 
-" buffer (buffer < window < tab)
+
+""" Buffer (buffer < window < tab)
 nmap <leader>xx <Action>(CloseContent)
 nmap <leader>xa <Action>(CloseAllEditors)
 nmap <leader>xo <Action>(CloseAllEditorsButActive)
 nmap <leader>xp <Action>(CloseAllUnpinnedEditors)
 
-""" window
+
+""" Window
 nmap <C-Tab> <Action>(PreviousTab)
 nmap <Tab> <Action>(NextTab)
 nmap <leader>p <Action>(PinActiveEditorTab)
+nmap <leader>X :action ReopenClosedTab<CR>
 
 nmap <leader>1 <Action>(GoToTab1)
 nmap <leader>2 <Action>(GoToTab2)
@@ -53,257 +87,195 @@ nmap <leader>7 <Action>(GoToTab7)
 nmap <leader>8 <Action>(GoToTab8)
 nmap <leader>9 <Action>(GoToTab9)
 
-""" tab
-map <leader>sh <Action>(MoveTabLeft)
-map <leader>sj <Action>(MoveTabDown)
-map <leader>sk <Action>(MoveTabUp)
-map <leader>sl <Action>(MoveTabRight)
-map <leader>sH <Action>(SplitHorizontally)
-map <leader>sV <Action>(SplitVertically)
 
-nmap <C-p> <Action>(JumpToLastWindow)
-nmap <M-i> <Action>(PrevSplitter)
-nmap <M-o> <Action>(NextSplitter)
+""" Tab
 nmap <C-k> <C-w>k
 nmap <C-j> <C-w>j
 nmap <C-h> <C-w>h
 nmap <C-l> <C-w>l
 
-nmap <leader>ww <Action>(HideAllWindows)
+map <leader>sk <Action>(MoveTabUp)
+map <leader>sj <Action>(MoveTabDown)
+map <leader>sh <Action>(MoveTabLeft)
+map <leader>sl <Action>(MoveTabRight)
+
 nmap <leader>wk <Action>(StretchSplitToTop)
 nmap <leader>wj <Action>(StretchSplitToBottom)
 nmap <leader>wh <Action>(StretchSplitToLeft)
 nmap <leader>wl <Action>(StretchSplitToRight)
-nmap <leader>wm <Action>(MaximizeEditorInSplit)
-nmap <leader>wu <Action>(UnsplitAll)
 
-" menu
+nmap <leader>ww <Action>(HideAllWindows)
+nmap <leader>wv <Action>(SplitVertically)
+nmap <leader>wh <Action>(SplitHorizontally)
+nmap <leader>wu <Action>(Unsplit)
+nmap <leader>wU <Action>(UnsplitAll)
+nmap <leader>wm <Action>(MoveEditorToOppositeTabGroup)
+nmap <leader>wM <Action>(MaximizeEditorInSplit)
+
+
+""" Menu
 nmap <leader>mm <Action>(MainMenu)
-nmap <leader>ma <Action>(AnalyzeMenu)
+""nmap <leader>ma <Action>(AnalyzeMenu)
 nmap <leader>mb <Action>(BuildMenu)
 nmap <leader>mc <Action>(CodeMenu)
 nmap <leader>mf <Action>(FindMenuGroup)
 nmap <leader>mg <Action>(GoToMenu)
 nmap <leader>ms <Action>(ScopeViewPopupMenu)
 nmap <leader>mt <Action>(EditorTabPopupMenu)
-nmap <leader>mw <Action>(ToolWindowsGroup)
+nmap <C-m> <Action>(ShowPopupMenu) " It acts as a right click
 
-" file
-nmap <leader>of <Action>(OpenFile)
-nmap <leader>yp <Action>(CopyAbsolutePath)
-nmap <leader>rf <Action>(RecentFiles)
+
+""" File
+nmap <leader>fo <Action>(OpenFile)
+nmap <leader>fy <Action>(CopyAbsolutePath)
+nmap <leader>fr <Action>(RecentFiles)
+"Bug sur les deux
+"nmap <leader>fs <Action>(FileStructurePopup)       "File Tree
+"nmap <leader>fh <Action>(LocalHistory.ShowHistory) "File History
 nmap <leader>rl <Action>(RecentLocations)
-nmap <leader>rp <Action>(ManageRecentProjects)
-nmap <leader>sh <Action>(LocalHistory.ShowHistory)
-nmap <leader>sf <Action>(ShowFilePath)
-nmap <leader>si <Action>(SelectIn)
 nmap <leader>fp <Action>(FindInPath)
-nmap <leader>rp <Action>(ReplaceInPath)
-nmap <leader>sw <Action>($SearchWeb)
 
-" tag
+
+""" Tag
 nmap <leader>fu <Action>(FindUsages)
-nmap <leader>fs <Action>(FileStructurePopup)
 nmap <leader>su <Action>(ShowUsages)
-nmap <leader>hl <Action>(HighlightUsagesInFile)
-nmap <leader>qp <Action>(QuickPreview)
-nmap <leader>qd <Action>(QuickDefinition)
-nmap <leader>qD <Action>(QuickTypeDefinition)
-
-" code
-map <leader>c <Action>(CommentByLineComment)
-map <leader>C <Action>(CommentByBlockComment)
-nmap <leader>qf <Action>(ShowIntentionActions)
 nmap <leader>se <Action>(ShowErrorDescription)
-nmap <leader>om <Action>(OverrideMethods)
-nmap <leader>im <Action>(ImplementMethods)
-nmap <leader>fc <Action>(ReformatCode)
-nmap <leader>ic <Action>(InspectCode)
-nmap <leader>so <Action>(SelectAllOccurrences)
-nmap <leader>gc <Action>(Generate)
-nmap <leader>gt <Action>(GoToTest)
+nmap <leader>st <Action>(ExpressionTypeInfo)
+nmap <leader>sf <Action>(ShowFilePath)
 
-" run
+nmap <leader>qf <Action>(ShowIntentionActions)
+nmap <leader>qp <Action>(QuickPreview)
+nmap <leader>qi <Action>(QuickImplementations)
+""nmap <leader>qd <Action>(QuickDefinition)
+""nmap <leader>qd <Action>(QuickTypeDefinition)
+""nmap <leader>ip <Action>(ParameterInfo)
+
+
+""" Code
+map <leader>c <Action>(CommentByLineComment)
+map <leader>gc <Action>(Generate)
+nmap <leader>sd <Action>(SafeDelete)
+
+"map <leader>C <Action>(CommentByBlockComment)
+""nmap <leader> <Action>(OverrideMethods)
+""nmap <leader> <Action>(ImplementMethods)
+""nmap <leader> <Action>(SelectAllOccurrences)
+""nmap <leader> <Action>(ReformatCode)
+""nmap <leader> <Action>(InspectCode)
+""nmap <leader> <Action>(OptimizeImports)
+
+
+""" Run
+nmap <leader>rm <Action>(RunMenu)
 nmap <leader>rc <Action>(ContextRun)
 nmap <leader>rx <Action>(chooseRunConfiguration)
 nmap <leader>rr <Action>(Rerun)
 nmap <leader>rt <Action>(RunTests)
+nmap <leader>rf <Action>(RerunFailedTests)
 nmap <leader>rs <Action>(Stop)
 
-" debug
+
+""" Debug
 nmap <leader>dc <Action>(ContextDebug)
-nmap <leader>dx <Action>(Debug)
+nmap <leader>dx <Action>(chooseDebugConfiguration)
+nmap <leader>dr <Action>(Resume)
+nmap <leader>df <Action>(RunToCursor)
+nmap <leader>do <Action>(StepOver)
+"nmap <leader>di <Action>(StepInto)
+nmap <leader>di <Action>(StepIntoMyCode)
+nmap <leader>dI <Action>(StepOut)
+nmap <leader>dR <Action>(EvaluateExpression)
+vnoremap <leader>di <Action>(Debugger.AddInlineWatch)
+vnoremap <leader>dw <Action>(Debugger.AddToWatch)
+
+
+""" Breakpoints
 nmap <leader>db <Action>(ToggleLineBreakpoint)
 nmap <leader>de <Action>(EditBreakpoint)
 nmap <leader>dv <Action>(ViewBreakpoints)
+nnoremap <leader>dr <Action>(Debugger.RemoveAllBreakpointsInFile)
+nnoremap <leader>dR <Action>(Debugger.RemoveAllBreakpoints)
+nmap <leader>dm <Action>(XDebugger.MuteBreakpoints)
 
 
-" refactor
-nmap <leader>rn <Action>(RenameElement)
-nmap <leader>re <Action>(Refactorings.QuickListPopupAction)
+""" Bookmarks
+nmap <leader>bm <Action>(Bookmarks)
+nmap <leader>bs <Action>(ShowBookmarks)
+nmap <leader>bt <Action>(ActivateBookmarksToolWindow)
+nmap <leader>bb <Action>(ToggleBookmark)
+nmap <leader>be <Action>(EditBookmark)
+nmap <leader>bp <Action>(GotoPreviousBookmark)
+nmap <leader>bn <Action>(GotoNextBookmark)
+
+
+""" Refactor
+nmap <leader>ll <Action>(Refactorings.QuickListPopupAction)
+nmap <leader>ln <Action>(RenameElement)
+nmap <leader>lc <Action>(ChangeSignature)
+nmap <leader>lv <Action>(IntroduceVariable)
+nmap <leader>lx <Action>(IntroduceConstant)
+nmap <leader>lf <Action>(IntroduceField)
+nmap <leader>lp <Action>(IntroduceParameter)
+
+nmap <leader>li <Action>(Inline)
+vmap <leader>lm <Action>(ExtractMethod)
+vmap <leader>lw <Action>(SurroundWith)
 nmap <leader>uw <Action>(Unwrap)
-nmap <leader>sw <Action>(SurroundWith)
-nmap <leader>sd <Action>(SafeDelete)
-nmap <leader>oi <Action>(OptimizeImports)
 
-" hierarchy
+
+""" Hierarchy
 nmap <leader>hc <Action>(CallHierarchy)
 nmap <leader>hm <Action>(MethodHierarchy)
 nmap <leader>ht <Action>(TypeHierarchy)
 
-" collapse
+
+""" Collapse
 nmap zz <Action>(ExpandCollapseToggleAction)
 nmap za <Action>(CollapseAllRegions)
 nmap zA <Action>(ExpandAllRegions)
 
-" zen
-nmap <leader>z <Action>(ToggleZenMode)
 
-" []
-nmap [b <Action>(PreviousTab)
-nmap ]b <Action>(NextTab)
-nmap [g <Action>(GotoPreviousError)
-nmap ]g <Action>(GotoNextError)
-nmap [u <Action>(GotoPrevElementUnderCaretUsage)
-nmap ]u <Action>(GotoNextElementUnderCaretUsage)
-nmap [o <Action>(PreviousOccurence)
-nmap ]o <Action>(NextOccurence)
-nmap [m <Action>(MethodUp)
-nmap ]m <Action>(MethodDown)
-nmap [c <Action>(JumpToLastChange)
-nmap ]c <Action>(JumpToNextChange)
-
-""" goto
-nmap <leader>a <Action>(GotoAction)
-nmap ga <Action>(GotoAction)
+""" Goto
 nmap gc <Action>(GotoClass)
 nmap gf <Action>(GotoFile)
 nmap gs <Action>(GotoSymbol)
+nmap ga <Action>(GotoAction)
 nmap gt <Action>(GoToTest)
 nmap gT <Action>(TextSearchAction)
 nmap go <Action>(GotoSuperMethod)
 nmap gd <Action>(GotoDeclaration)
 nmap gD <Action>(GotoTypeDeclaration)
 nmap gi <Action>(GotoImplementation)
-nmap gI <Action>(QuickImplementations)
 nmap gn <Action>(ShowNavBar)
 
+nmap gm <Action>(MethodDown)
+nmap gM <Action>(MethodUp)
+nmap ge <Action>(GotoNextError)
+nmap gE <Action>(GotoPreviousError)
+nmap gh <Action>(JumpToNextChange)
+nmap gH <Action>(JumpToLastChange)
 
+nmap gy <Action>(RecentChangedFiles)
 
-"" Plugins  --------------------------------
-""" Surround Plugin  --------------------------------
-" Emulates vim-surround. Mappings to easily delete, change and add such surroundings in pairs
-" Basic Commands:
-"   cs   Change surroundings
-"   cst  Change surroundings tag
-"   ds   Delete surroundings
-"   dst  Delete surroundings tag
-"   ys   Surround text object
-" See https://github.com/tpope/vim-surround/blob/master/doc/surround.txt for details
-" usefull when working with markup languages
-set surround
-
-
-""" argtextobj  Plugin  --------------------------------
-" Emulates argtextobj. Provides a text-object 'a' for function arguments
-" Text object
-" ai
-" aa
-" See https://www.vim.org/scripts/script.php?script_id=2699 for details
-"set argtextobj
-"let g:argtextobj_pairs="[:],(:),<:>"
-
-"""  exchange Plugin  --------------------------------
-" Emulates exchange.vim. Text exchange, to swap blocks
-" Basic Commands:
-"   cx    First use to define the exchange, second use defines the second and exchange
-"   cxx   Like cx for an entire line
-"   X     Like cx for visual mode
-" See https://www.vim.org/scripts/script.php?script_id=2699 for details
-"set exchange
-
-""" easy motion plugin  --------------------------------
-" Emulates vim-easymotion
-" Make sure to install IdeaVim-EasyMotion and AceJump Plugins
-" Basic Commands:
-"   easy-motion-s Search backward
-"   easy-motion-f Search forward
-" See https://github.com/AlexPl292/IdeaVim-EasyMotion#supported-commands for details
-"Plug 'easymotion/vim-easymotion'
-"map <leader>J <Plug>(easymotion-s)
-"map <leader>j <Plug>(easymotion-f)
-
-""" NERDTree plugin  --------------------------------
-" Emulates NERDTree
-" Basic Commands:
-"   Ctrl-n  Open NERDTree (mapped bellow)
-"   q	    Close the NERDTree windowe
-"   o   	Open files, directories and bookmarks
-"   go   	Open selected file, but leave cursor in the NERDTree
-"   i   	Open selected file in a split window
-"   gi   	Same as i, but leave the cursor on the NERDTree
-"   s   	Open selected file in a new vsplit
-"   gs   	Same as s, but leave the cursor on the NERDTree
-"   <C-J>	Jump down to next sibling of the current directory
-"   <C-K>	Jump up to previous sibling of the current directory
-"   R	    Recursively refresh the current root
-"   m	    Display the NERDTree menu
-" See  https://github.com/JetBrains/ideavim/wiki/NERDTree-support for details
-set NERDTree
-map <c-n> :NERDTreeToggle<CR>
-
-""" multiple-cursors plugin  --------------------------------
-" Emulates vim-multiple-cursors
-" Basic Commands:
-"   <C-n> start multicursor
-"   <C-n> next match
-"   <C-x> skip next match
-"   <C-p> remove current match and go back to previous one
-" See https://github.com/terryma/vim-multiple-cursors for details
-"set multiple-cursors
-"map mc <A-n>
-"map mx <A-x>
-"map mp <A-p>
-
-""" Commentary plugin  --------------------------------
-"Plug 'tpope/vim-commentary'
-" To comment using Vim Motion
-
-""" ReplaceWithRegister plugin  --------------------------------
-" Emulates  ReplaceWithRegister
-" Basic Commands:
-"   [count]["x]grr          Replace [count] lines with the contents of register x.
-"   {Visual}["x]gr          Replace the selection with the contents of register x.
-" See https://github.com/vim-scripts/ReplaceWithRegister for details
-"Plug 'vim-scripts/ReplaceWithRegister'
-
-
-""" textobj-entire plugin  --------------------------------
-" Emulates  vim-textobj-entire
-" Basic Commands:
-"   {motion}ae    Apply motion on entire text
-"   {motion}ie    Apply motion on entire text w/o trailing and leading empty lines
-" See https://github.com/kana/vim-textobj-entire for details
-"set textobj-entire
-
-""" highlightedyank plugin  --------------------------------
-" Emulates vim-highlightedyank
-" Highlight yanked text
-" See https://github.com/machakann/vim-highlightedyank for details
-"set highlightedyank
-"let g:highlightedyank_highlight_duration = "1000"
-"let g:highlightedyank_highlight_color = "rgba(57, 197, 187, 155)"
-
-
-"Plug 'michaeljsmith/vim-indent-object'
-
-" set which-key
-
-
-" continuous shift
+""" Continuous shift
 xnoremap < <gv
 xnoremap > >gv
 nnoremap <C-d> <C-d>zz
 nnoremap <C-u> <C-u>zz
 nnoremap n nzzzv
 nnoremap N Nzzzv
+
+" Might be usefull to add
+" "To open a file
+" nmap <leader>bo <Action>(OpenInRightSplit)
+" " []
+" nmap [u <Action>(GotoPrevElementUnderCaretUsage)
+" nmap ]u <Action>(GotoNextElementUnderCaretUsage)
+" nmap [o <Action>(PreviousOccurence)
+" nmap ]o <Action>(NextOccurence)
+"
+" nmap <leader>lo <Action>(IntroduceParameterObject)
+" "nmap <leader>le <Action>(EncapsulateFields)
+" "nmap <leader>fa <Action>($SearchWeb)
+" "nmap <leader>si <Action>(SelectIn)
+" "nmap <leader>rp <Action>(ManageRecentProjects) "To open another project

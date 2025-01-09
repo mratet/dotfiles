@@ -1,21 +1,15 @@
 "" Keyboard Shortcut Rebinds (in PyCharm)
 "" <EditorUp> -> <c-k> // Useful for navigating in pop ups
 "" <EditorDown> -> <c-j> // Useful for navigating in pop ups
-"" <copilot.openCopilot> -> <c-p>
-"" <copilot.toggleCopilot> -> <c-P>
-"" <copilot.requestCompletions> -> <c-[>
-"" <copilot.cycleNextInLays> -> <c-[>
-"" <copilot.cyclePrevInLays> -> <c-]> 
 
 """ Editing and Reloading the Config
 nnoremap \e :e ~/.ideavimrc<CR>
 nnoremap \r :action IdeaVim.ReloadVimRc.reload<CR>
+nnoremap \t :action VimFindActionIdAction<CR>
 
 """ Common settings -------------------------
-set clipboard+=unnamed, unnamedplus
-set clipboard+=ideaput
-
 set so=5
+" ':set rnu&' to disable relative line numbers
 set relativenumber
 set showmode
 set incsearch
@@ -24,39 +18,59 @@ set history=1000
 set timeoutlen=400
 
 """ ideavim settings
-set ideajoin
+set clipboard^=unnamed,unnamedplus
+set clipboard+=ideaput "A verifier
 set ideamarks
 set idearefactormode=normal
 set ideastatusicon=gray
+set ideajoin
 
 """ The Leader Key
 let mapleader=" "
 
 """ Plugins
-set surround        " commands: ys, cs, ds, S
-"set multiple-cursor " commands: <A-n>, <A-x>, <A-p>, <A-n>
+set surround            " commands: ys, cs, ds, S (surround select text)
 set ReplaceWithRegister " commands: gr, grr  ex:griw
 set exchange            " commands: cx{motion}, cxx, {Visual}X, cxc
 set highlightedyank
-set textobj-entire " additional text objects: ae, ie
-set textobj-indent   " additional text objects: ai, ii, aI, iI
+set textobj-entire      " additional text objects: ae, ie
+set textobj-indent      " additional text objects: ai, ii, aI, iI
+"set argtextobj         " additional text objects: ia, aa, iA, aA
 set NERDTree
 nnoremap <leader>nt :NERDTree<CR>
+
+" Emulates the vim-multiple-curosors plugin with IntelliJ's built-in actions
+map <C-n> <Action>(SelectNextOccurrence)
+map <C-x> <Action>(FindNext)
+map <C-p> <Action>(UnselectPreviousOccurrence)
+map <leader><C-n> <Action>(SelectAllOccurences)
 
 """ Distraction Free Mode
 nmap <c-z> :action ToggleDistractionFreeMode<CR>
 nmap <leader>z <Action>(ToggleZenMode)
 
 """ Terminal
+nnoremap <leader>ff :action Switcher<CR>
 nmap <leader>tt <Action>(ActivateTerminalToolWindow)
 nmap <leader>tc <Action>(Terminal.OpenInTerminal)
 nmap <leader>th <Action>(HideActiveWindow)
+nmap <leader>tp <Action>(ActivatePythonConsoleToolWindow)
+nmap <leader>tb <Action>(ActivateBookmarksToolWindow)
 nmap <leader>to <Action>(ActivateTODOToolWindow)
 
-nnoremap <leader>ff :action Switcher<CR>
-nmap <C-W> <Action>(PrevSplitter) "Utilisation pas clair
-nmap <C-w> <Action>(NextSplitter)
-nmap <C-p> <Action>(JumpToLastWindow)
+""" Copilot
+" Copilot Pycharms's isn't mature enough now
+" Ctrl + ./, to cycleNext/PrevInLays
+map <leader>tl <Action>(copilot.chat.show)
+
+
+""" Font Size
+nmap <leader>usk <Action>(EditorIncreaseFontSize)
+nmap <leader>usl <Action>(EditorIncreaseFontSizeGlobal)
+nmap <leader>usj <Action>(EditorDecreaseFontSize)
+nmap <leader>ush <Action>(EditorDecreaseFontSizeGlobal)
+nmap <leader>usr <Action>(EditorResetFontSize)
+nmap <leader>use <Action>(EditorResetFontSizeGlobal)
 
 
 """ Location
@@ -66,16 +80,17 @@ nmap <C-o> <Action>(Forward)
 
 """ Buffer (buffer < window < tab)
 nmap <leader>xx <Action>(CloseContent)
+nmap <leader>X <Action>(ReopenClosedTab)
 nmap <leader>xa <Action>(CloseAllEditors)
 nmap <leader>xo <Action>(CloseAllEditorsButActive)
 nmap <leader>xp <Action>(CloseAllUnpinnedEditors)
 
 
 """ Window
-nmap <C-Tab> <Action>(PreviousTab)
 nmap <Tab> <Action>(NextTab)
+nmap <C-Tab> <Action>(PreviousTab)
 nmap <leader>p <Action>(PinActiveEditorTab)
-nmap <leader>X :action ReopenClosedTab<CR>
+nmap <C-e> <Action>(JumpToLastWindow)
 
 nmap <leader>1 <Action>(GoToTab1)
 nmap <leader>2 <Action>(GoToTab2)
@@ -86,7 +101,6 @@ nmap <leader>6 <Action>(GoToTab6)
 nmap <leader>7 <Action>(GoToTab7)
 nmap <leader>8 <Action>(GoToTab8)
 nmap <leader>9 <Action>(GoToTab9)
-
 
 """ Tab
 nmap <C-k> <C-w>k
@@ -104,9 +118,10 @@ nmap <leader>wj <Action>(StretchSplitToBottom)
 nmap <leader>wh <Action>(StretchSplitToLeft)
 nmap <leader>wl <Action>(StretchSplitToRight)
 
+"HideAllWindows is a Toggle Command !
 nmap <leader>ww <Action>(HideAllWindows)
 nmap <leader>wv <Action>(SplitVertically)
-nmap <leader>wh <Action>(SplitHorizontally)
+nmap <leader>wo <Action>(SplitHorizontally)
 nmap <leader>wu <Action>(Unsplit)
 nmap <leader>wU <Action>(UnsplitAll)
 nmap <leader>wm <Action>(MoveEditorToOppositeTabGroup)
@@ -114,61 +129,62 @@ nmap <leader>wM <Action>(MaximizeEditorInSplit)
 
 
 """ Menu
+""" Most actions of ViewMenu, RefactoringMenu, EditorTabPopupMenu are already binded
 nmap <leader>mm <Action>(MainMenu)
-""nmap <leader>ma <Action>(AnalyzeMenu)
-nmap <leader>mb <Action>(BuildMenu)
-nmap <leader>mc <Action>(CodeMenu)
-nmap <leader>mf <Action>(FindMenuGroup)
+nmap <leader>mf <Action>(FileMenu)
+nmap <leader>me <Action>(EditMenu)
 nmap <leader>mg <Action>(GoToMenu)
+nmap <leader>mc <Action>(CodeMenu)
+nmap <leader>mt <Action>(ToolsMenu)
+nmap <leader>mh <Action>(HelpMenu)
+nmap <leader>mb <Action>(BuildMenu)
+nmap <leader>mF <Action>(FindMenuGroup)
 nmap <leader>ms <Action>(ScopeViewPopupMenu)
-nmap <leader>mt <Action>(EditorTabPopupMenu)
-nmap <C-m> <Action>(ShowPopupMenu) " It acts as a right click
+" It acts as a right click
+nmap <C-m> <Action>(ShowPopupMenu)
 
 
 """ File
 nmap <leader>fo <Action>(OpenFile)
 nmap <leader>fy <Action>(CopyAbsolutePath)
 nmap <leader>fr <Action>(RecentFiles)
-"Bug sur les deux
-"nmap <leader>fs <Action>(FileStructurePopup)       "File Tree
-"nmap <leader>fh <Action>(LocalHistory.ShowHistory) "File History
+nmap <leader>fs <Action>(FileStructurePopup)
+nmap <leader>fh <Action>(LocalHistory.ShowHistory)
 nmap <leader>rl <Action>(RecentLocations)
 nmap <leader>fp <Action>(FindInPath)
 
 
-""" Tag
+""" Show
 nmap <leader>fu <Action>(FindUsages)
 nmap <leader>su <Action>(ShowUsages)
-nmap <leader>se <Action>(ShowErrorDescription)
-nmap <leader>st <Action>(ExpressionTypeInfo)
 nmap <leader>sf <Action>(ShowFilePath)
 
-nmap <leader>qf <Action>(ShowIntentionActions)
-nmap <leader>qp <Action>(QuickPreview)
-nmap <leader>qi <Action>(QuickImplementations)
-""nmap <leader>qd <Action>(QuickDefinition)
-""nmap <leader>qd <Action>(QuickTypeDefinition)
-""nmap <leader>ip <Action>(ParameterInfo)
+nmap <leader>sp <Action>(QuickPreview)
+nmap <leader>si <Action>(QuickImplementations)
+nmap <leader>st <Action>(ExpressionTypeInfo)
+nmap <leader>sP <Action>(ParameterInfo)
+
+nmap <leader>sa <Action>(ShowIntentionActions)
+"nmap <leader>  <Action>(ShowHoverInfo) Currently useless as I can't focus into Documentation ToolWindow
+nmap <leader>sd <Action>(QuickJavaDoc)
+"nmap <leader>  <Action>(Documentation.KeepTab) Don't know how to make it works
+nmap <leader>sD <Action>(ExternalJavaDoc)
+nmap <leader>se <Action>(ShowErrorDescription)
 
 
 """ Code
 map <leader>c <Action>(CommentByLineComment)
+" used for ImplementMethods / OverrideMethods
 map <leader>gc <Action>(Generate)
-nmap <leader>sd <Action>(SafeDelete)
-
-"map <leader>C <Action>(CommentByBlockComment)
-""nmap <leader> <Action>(OverrideMethods)
-""nmap <leader> <Action>(ImplementMethods)
-""nmap <leader> <Action>(SelectAllOccurrences)
-""nmap <leader> <Action>(ReformatCode)
-""nmap <leader> <Action>(InspectCode)
-""nmap <leader> <Action>(OptimizeImports)
+nmap <leader>gf <Action>(ReformatCode)
+nmap <leader>gi <Action>(InspectCode)
+nmap <leader>go <Action>(OptimizeImports)
 
 
 """ Run
 nmap <leader>rm <Action>(RunMenu)
 nmap <leader>rc <Action>(ContextRun)
-nmap <leader>rx <Action>(chooseRunConfiguration)
+nmap <leader>rx <Action>(ChooseRunConfiguration)
 nmap <leader>rr <Action>(Rerun)
 nmap <leader>rt <Action>(RunTests)
 nmap <leader>rf <Action>(RerunFailedTests)
@@ -193,15 +209,14 @@ vnoremap <leader>dw <Action>(Debugger.AddToWatch)
 nmap <leader>db <Action>(ToggleLineBreakpoint)
 nmap <leader>de <Action>(EditBreakpoint)
 nmap <leader>dv <Action>(ViewBreakpoints)
-nnoremap <leader>dr <Action>(Debugger.RemoveAllBreakpointsInFile)
-nnoremap <leader>dR <Action>(Debugger.RemoveAllBreakpoints)
+"nnoremap <leader>dr <Action>(Debugger.RemoveAllBreakpointsInFile)
+"nnoremap <leader>dR <Action>(Debugger.RemoveAllBreakpoints)
 nmap <leader>dm <Action>(XDebugger.MuteBreakpoints)
 
 
 """ Bookmarks
 nmap <leader>bm <Action>(Bookmarks)
 nmap <leader>bs <Action>(ShowBookmarks)
-nmap <leader>bt <Action>(ActivateBookmarksToolWindow)
 nmap <leader>bb <Action>(ToggleBookmark)
 nmap <leader>be <Action>(EditBookmark)
 nmap <leader>bp <Action>(GotoPreviousBookmark)
@@ -219,8 +234,8 @@ nmap <leader>lp <Action>(IntroduceParameter)
 
 nmap <leader>li <Action>(Inline)
 vmap <leader>lm <Action>(ExtractMethod)
-vmap <leader>lw <Action>(SurroundWith)
-nmap <leader>uw <Action>(Unwrap)
+vmap <leader>ls <Action>(SurroundWith)
+nmap <leader>lu <Action>(Unwrap)
 
 
 """ Hierarchy
@@ -231,8 +246,10 @@ nmap <leader>ht <Action>(TypeHierarchy)
 
 """ Collapse
 nmap zz <Action>(ExpandCollapseToggleAction)
-nmap za <Action>(CollapseAllRegions)
-nmap zA <Action>(ExpandAllRegions)
+nmap zo <Action>(ExpandRegionRecursively)
+nmap zc <Action>(CollapseRegionRecursively)
+nmap za <Action>(ExpandAllRegions)
+nmap zA <Action>(CollapseAllRegions)
 
 
 """ Goto
@@ -255,7 +272,6 @@ nmap gE <Action>(GotoPreviousError)
 nmap gh <Action>(JumpToNextChange)
 nmap gH <Action>(JumpToLastChange)
 
-nmap gy <Action>(RecentChangedFiles)
 
 """ Continuous shift
 xnoremap < <gv
@@ -265,17 +281,10 @@ nnoremap <C-u> <C-u>zz
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-" Might be usefull to add
-" "To open a file
-" nmap <leader>bo <Action>(OpenInRightSplit)
-" " []
-" nmap [u <Action>(GotoPrevElementUnderCaretUsage)
-" nmap ]u <Action>(GotoNextElementUnderCaretUsage)
-" nmap [o <Action>(PreviousOccurence)
-" nmap ]o <Action>(NextOccurence)
-"
-" nmap <leader>lo <Action>(IntroduceParameterObject)
-" "nmap <leader>le <Action>(EncapsulateFields)
-" "nmap <leader>fa <Action>($SearchWeb)
-" "nmap <leader>si <Action>(SelectIn)
-" "nmap <leader>rp <Action>(ManageRecentProjects) "To open another project
+" Might be useful to add someday :
+" - $SearchWeb
+" - SelectIn
+" - Live Templates / Postfix Completion
+" - Replace / ReplaceInPath 
+" - QuickDefinition / QuickTypeDefinition
+" - NextSplitter / PrevSplitter

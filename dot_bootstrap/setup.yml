@@ -27,7 +27,6 @@
           - make
           - patch
           - bzip2
-          - sqlite
           - fd-find
           - autoconf
           - flatpak
@@ -39,9 +38,7 @@
           - polybar
           - picom
           - feh
-          - ulauncher
           - flameshot
-          - steam
         state: present
 
     - name: Change shell to zsh
@@ -63,6 +60,11 @@
     - name: Install Discord
       community.general.flatpak:
         name: com.discordapp.Discord
+        state: present
+
+    - name: Install Steam
+      community.general.flatpak:
+        name: com.valvesoftware.Steam
         state: present
         
     - name: Install Zotero

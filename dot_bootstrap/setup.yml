@@ -18,6 +18,7 @@
           - btop
           - vim
           - firefox
+          - vlc
           - gh
           - gcc
           - zsh
@@ -40,6 +41,7 @@
           - feh
           - ulauncher
           - flameshot
+          - steam
         state: present
 
     - name: Change shell to zsh
@@ -67,15 +69,6 @@
       community.general.flatpak:
         name: org.zotero.Zotero
         state: present
-        
-    - name: Install VLC
-      community.general.snap:
-        name: vlc
-
-    - name: Install Pycharm
-      community.general.snap:
-        name: pycharm-professional
-        classic: true
 
     - name: Ensure fonts directory
       ansible.builtin.file:

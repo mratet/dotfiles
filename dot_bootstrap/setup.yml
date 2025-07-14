@@ -59,32 +59,6 @@
         name: "{{ remote_regular_user }}"
         shell: /usr/bin/zsh
 
-    - name: Add the flathub flatpak repository remote to the user installation
-      community.general.flatpak_remote:
-        name: flathub
-        state: present
-        flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-
-    - name: Install Obsidian
-      community.general.flatpak:
-        name: md.obsidian.Obsidian
-        state: present
-
-    - name: Install Discord
-      community.general.flatpak:
-        name: com.discordapp.Discord
-        state: present
-
-    - name: Install Steam
-      community.general.flatpak:
-        name: com.valvesoftware.Steam
-        state: present
-        
-    - name: Install Zotero
-      community.general.flatpak:
-        name: org.zotero.Zotero
-        state: present
-
     - name: Ensure fonts directory
       ansible.builtin.file:
         path: "~{{ remote_regular_user }}/.fonts"

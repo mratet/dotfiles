@@ -46,3 +46,6 @@ eval "$(pyenv init -)"
 
 # autoenv
 source ~/.autoenv/activate.sh
+
+# cuda
+export PATH=${PATH}:/usr/local/cuda-12.9/bin
